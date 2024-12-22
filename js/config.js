@@ -8,3 +8,13 @@ window._config = {
         invokeUrl: '' // e.g. https://rc7nyt4tql.execute-api.us-west-2.amazonaws.com/prod',
     }
 };
+
+// Add this function to calculate SECRET_HASH
+function calculateSecretHash(username) {
+    const message = username + window._config.cognito.userPoolClientId;
+    const key = window._config.cognito.clientSecret;
+    
+    // Use CryptoJS or similar library to calculate HMAC SHA256
+    const hash = CryptoJS.HmacSHA256(message, key);
+    return CryptoJS.enc.Base64.stringify(hash);
+}
